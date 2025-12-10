@@ -36,6 +36,7 @@ export function AuthForm({ type }: AuthFormProps) {
 
             if (type === "login") {
                 toast.success(response.data.message);
+                localStorage.setItem("logged_in", "true");
                 setTimeout(() => {
                     router.replace("/");
                     router.refresh();
