@@ -36,7 +36,10 @@ export function AuthForm({ type }: AuthFormProps) {
 
             if (type === "login") {
                 toast.success(response.data.message);
-                router.push("/");
+                setTimeout(() => {
+                    router.replace("/");
+                    router.refresh();
+                }, 200);
             }
         } catch (error: any) {
             setMessage(error.response?.data?.message || "Something went wrong");
