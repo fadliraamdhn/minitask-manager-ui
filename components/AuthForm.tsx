@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowRight, Lock, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/axios";
+import { toast } from "sonner";
 
 interface AuthFormProps {
     type: "login" | "register";
@@ -34,6 +35,7 @@ export function AuthForm({ type }: AuthFormProps) {
             }
 
             if (type === "login") {
+                toast.success(response.data.message);
                 router.push("/");
             }
         } catch (error: any) {

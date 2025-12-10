@@ -1,10 +1,10 @@
+import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest, _ev: NextFetchEvent) {
     const token = req.cookies.get("token")?.value;
 
-    if (!token) {
+    if (req.nextUrl.pathname === "/" && !token) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
