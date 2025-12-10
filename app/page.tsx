@@ -1,18 +1,26 @@
+"use client";
+
 import DarkModeToggle from "@/components/DarkModeToggle";
 import { AddTaskForm } from "@/components/TaskForm";
 import { TaskList } from "@/components/TaskList";
 import { TaskProvider } from "@/contexts/TaskContext";
 import { CheckSquare } from "lucide-react";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default async function Home() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+export default function Home() {
+    const router = useRouter();
 
-    if (!token) {
-        redirect("/login");
-    }
+    useEffect(() => {
+        const token = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("token="))
+            ?.split("=")[1];
+
+        if (!token) {
+            router.replace("/login");
+        }
+    }, [router]);
 
     return (
         <div className="min-h-screen bg-background">
@@ -31,8 +39,8 @@ export default async function Home() {
 
                 <TaskProvider>
                     <main className="space-y-6">
-                        <AddTaskForm/>
-                        <TaskList/>
+                        <AddTaskForm />
+                        <TaskList />
                     </main>
                 </TaskProvider>
             </div>
