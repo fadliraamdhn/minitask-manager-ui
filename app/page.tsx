@@ -3,8 +3,14 @@ import { AddTaskForm } from "@/components/TaskForm";
 import { TaskList } from "@/components/TaskList";
 import { TaskProvider } from "@/contexts/TaskContext";
 import { CheckSquare } from "lucide-react";
+import Link from "next/link";
+import { cookies } from "next/headers";
 
-export default function Home() {
+export default async function Home() {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token");
+    const isLoggedIn = !!token;
+
     return (
         <div className="min-h-screen bg-background">
             <div className="max-w-2xl mx-auto px-4 py-12">
@@ -17,7 +23,17 @@ export default function Home() {
                             Tasks
                         </h1>
                     </div>
-                    <DarkModeToggle />
+
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/login"
+                            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition"
+                        >
+                            {isLoggedIn ? "Change Account" : "Login"}
+                        </Link>
+
+                        <DarkModeToggle />
+                    </div>
                 </header>
 
                 <TaskProvider>
