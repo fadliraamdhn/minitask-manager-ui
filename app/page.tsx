@@ -1,27 +1,10 @@
-"use client";
-
 import DarkModeToggle from "@/components/DarkModeToggle";
 import { AddTaskForm } from "@/components/TaskForm";
 import { TaskList } from "@/components/TaskList";
 import { TaskProvider } from "@/contexts/TaskContext";
 import { CheckSquare } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Home() {
-    const router = useRouter();
-
-    useEffect(() => {
-        const token = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("token="))
-            ?.split("=")[1];
-
-        if (!token) {
-            router.replace("/login");
-        }
-    }, [router]);
-
     return (
         <div className="min-h-screen bg-background">
             <div className="max-w-2xl mx-auto px-4 py-12">
