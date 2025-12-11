@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import api, { handleAxiosError } from "@/lib/axios";
 import { Task, TaskCreate } from "@/types/task";
+import { toast } from "sonner";
 
 interface TaskContextType {
     tasks: Task[];
@@ -46,8 +47,8 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
             const res = await api.post("/task", task);
             setTasks((prev) => [res.data.data, ...prev]);
             await fetchTasks(page)
-        } catch (err: unknown) {
-            setError(handleAxiosError(err));
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || "Login First")
         }
     };
 
